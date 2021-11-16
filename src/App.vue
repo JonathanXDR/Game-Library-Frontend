@@ -1,86 +1,106 @@
 <template>
   <div>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Year</th>
-        <th>Rating</th>
-        <th></th>
-        <th></th>
-      </tr>
-      <tr
-        class="tableRow"
-        v-for="game in games"
-        :key="game.id"
-        v-bind:class="{ active: game.isActive }"
-      >
-        <td>{{ game.name }}</td>
-        <td>{{ game.year }}</td>
-        <td>{{ game.rating }}</td>
+    <form action="">
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Year</th>
+          <th>Rating</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr
+          class="tableRow"
+          v-for="game in games"
+          :key="game.id"
+          v-bind:class="{ active: game.isActive }"
+        >
+          <td>{{ game.name }}</td>
+          <td>{{ game.year }}</td>
+          <td>{{ game.rating }}</td>
 
-        <td class="btnCell">
-          <button
-            class="replaceBtn"
-            @click="stateActive(game.id)"
-            ref="updateButton"
-          >
-            <svg
-              class="replaceSvg"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="white"
+          <td class="btnCell">
+            <button
+              class="replaceBtn"
+              @click="stateActive(game.id)"
+              ref="updateButton"
             >
-              <path
-                d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"
-              />
-            </svg>
-          </button>
-        </td>
+              <svg
+                class="replaceSvg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="white"
+              >
+                <path
+                  d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"
+                />
+              </svg>
+            </button>
+          </td>
 
-        <td class="btnCell">
-          <button class="deleteBtn" v-on:click="deleteGame(game)">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="white"
-            >
-              <path
-                d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"
-              />
-            </svg>
-          </button>
-        </td>
-      </tr>
+          <td class="btnCell">
+            <button class="deleteBtn" @click="deleteGame(game)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="white"
+              >
+                <path
+                  d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"
+                />
+              </svg>
+            </button>
+          </td>
+        </tr>
 
-      <tr>
-        <td><input type="text" placeholder="Tetris..." v-model="name" /></td>
-        <td>
-          <input
-            type="number"
-            min="1000"
-            max="2021"
-            placeholder="1984..."
-            v-model="year"
-          />
-        </td>
-        <td>
-          <input
-            type="number"
-            min="1"
-            max="10"
-            placeholder="9.5..."
-            v-model="rating"
-          />
-        </td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
-    <button class="submitBtn" v-on:click="submitGame">Submit</button>
+        <tr>
+          <td>
+            <input
+              class="formInput"
+              type="text"
+              placeholder="Tetris..."
+              value="`${games}`"
+              v-model="name"
+              v-bind:class="{ valid: !validation.name }"
+              required
+            />
+          </td>
+          <td>
+            <input
+              class="formInput"
+              pattern="[0-9]"
+              type="number"
+              min="1000"
+              max="2021"
+              placeholder="1984..."
+              v-model="year"
+              v-bind:class="{ valid: !validation.year }"
+              required
+            />
+          </td>
+          <td>
+            <input
+              class="formInput"
+              type="number"
+              min="1"
+              max="10"
+              maxlength="2"
+              placeholder="9.5..."
+              v-model="rating"
+              v-bind:class="{ valid: !validation.rating }"
+              required
+            />
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </form>
+    <button class="submitBtn" @click="submitGame">Submit</button>
   </div>
 </template>
 <script>
@@ -93,6 +113,13 @@ export default {
       name: '',
       year: '',
       rating: '',
+
+      validation: {
+        name: false,
+        year: false,
+        rating: false,
+      },
+
       axiosConfig: {
         headers: {
           Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.aGVyb2t1.5tWoGjrKqJvXwK9EkenSz5RGgbstqUZhp-xkZajGRSY`,
@@ -103,6 +130,7 @@ export default {
   },
   methods: {
     async submitGame() {
+      this.disableBtn();
       const activeGame = this.games.filter((game) => game.isActive === true);
       if (activeGame.length === 1) {
         this.replaceGame(...activeGame);
@@ -125,6 +153,12 @@ export default {
       }
     },
 
+    async disableBtn() {
+      this.validation.name = !!this.name;
+      this.validation.rating = !!this.rating;
+      this.validation.year = !!this.year;
+    },
+
     async deleteGame(game) {
       await axios.delete(
         `https://crud-app-game.herokuapp.com/game/${game.id}`,
@@ -135,31 +169,27 @@ export default {
     },
 
     async replaceGame(game) {
-      const updatedGame = await axios.put(
-        `https://crud-app-game.herokuapp.com/game/${game.id}`,
-        {
-          name: this.name,
-          year: this.year,
-          rating: this.rating,
-        },
-        this.axiosConfig
-      );
-      /* 
-      this.games = this.games.map((thisGame) => {
-        if (thisGame.id === game.id) {
-          return {
-            id: thisGame.id,
+      const updatedGame = await axios
+        .put(
+          `https://crud-app-game.herokuapp.com/game/${game.id}`,
+          {
             name: this.name,
             year: this.year,
             rating: this.rating,
-          };
-        } else {
-          return thisGame;
-        }
-      });
-      */
+          },
+          this.axiosConfig
+        )
+        .then((res) => res.data);
 
-      this.games.push(updatedGame);
+      this.$set(
+        this.games,
+        this.games.findIndex((game) => game.id === updatedGame.id),
+        updatedGame
+      );
+
+      // this.games = this.games.map((game) =>
+      //   game.id === updatedGame.id ? updatedGame : game
+      // );
 
       this.name = '';
       this.year = '';
@@ -167,6 +197,7 @@ export default {
     },
 
     stateActive(id) {
+      this.fillInput();
       this.games = this.games.map((game) => {
         if (id === game.id) {
           return { ...game, isActive: !game.isActive };
@@ -175,15 +206,16 @@ export default {
         }
       });
     },
+
+    fillInput() {},
   },
+
   async mounted() {
     const response = await axios.get(
       'https://crud-app-game.herokuapp.com/game',
       this.axiosConfig
     );
-    this.games = response.data.map((res) => (
-      { ...res, isActive: false }
-    ));
+    this.games = response.data.map((res) => ({ ...res, isActive: false }));
   },
 };
 </script>
@@ -207,13 +239,6 @@ th {
   padding: 8px;
 }
 
-/* .tableRow {
-  background-color: #21C4F3
-} */
-
-.replaceSvg {
-}
-
 /* input[type='radio'] {
   display: none;
 } */
@@ -221,7 +246,7 @@ th {
 .btnCell {
   width: 10px;
 }
-
+/* 
 .submitBtn {
   background-color: #4caf50;
   color: white;
@@ -230,10 +255,10 @@ th {
   cursor: pointer;
   border-radius: 4px;
   margin-top: 10px;
-}
+} */
 
 .deleteBtn {
-  background-color: #f44336;
+  background-color: #ff453a;
   color: white;
   padding: 4px 6px;
   border: none;
@@ -242,7 +267,7 @@ th {
 }
 
 .replaceBtn {
-  background-color: #2196f3;
+  background-color: #5e5ce6;
   color: white;
   padding: 4px 6px;
   border: none;
@@ -251,6 +276,23 @@ th {
 }
 
 .active {
-  background: rebeccapurple;
+  background: #64d3ff;
+}
+
+.formInput {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  outline: none;
+  border: 2px solid #c4c4c4;
+  padding: 0 30px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.valid {
+  border: 2px solid #ff453a;
 }
 </style>
+
+// TODO: button disabeln // TODO: Values bei edit in die inputs füllen // TODO:
+Login // TODO: inputs dürfen die Werte nicht die Bedinungen überschreiten
