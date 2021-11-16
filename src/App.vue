@@ -8,14 +8,22 @@
         <th></th>
         <th></th>
       </tr>
-      <tr class="tableRow" v-for="game in games" :key="game.id">
+      <tr
+        class="tableRow"
+        v-for="game in games"
+        :key="game.id"
+        v-bind:class="{ active: game.isActive }"
+      >
         <td>{{ game.name }}</td>
         <td>{{ game.year }}</td>
         <td>{{ game.rating }}</td>
 
         <td class="btnCell">
-          <input type="radio" />
-          <label for="" class="replaceBtn" v-on:click="stateActive(game)">
+          <button
+            class="replaceBtn"
+            @click="stateActive(game.id)"
+            ref="updateButton"
+          >
             <svg
               class="replaceSvg"
               xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +36,7 @@
                 d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"
               />
             </svg>
-          </label>
+          </button>
         </td>
 
         <td class="btnCell">
@@ -75,7 +83,6 @@
     <button class="submitBtn" v-on:click="submitGame">Submit</button>
   </div>
 </template>
-
 <script>
 import axios from 'axios';
 export default {
@@ -86,36 +93,36 @@ export default {
       name: '',
       year: '',
       rating: '',
-
       axiosConfig: {
         headers: {
           Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.aGVyb2t1.5tWoGjrKqJvXwK9EkenSz5RGgbstqUZhp-xkZajGRSY`,
         },
       },
+      theCheckedRadioButton: false,
     };
   },
   methods: {
     async submitGame() {
-      // if stateActive is true, execute replaceGame
-      if ( 1 == 1) {
-        replaceGame();
+      const activeGame = this.games.filter((game) => game.isActive === true);
+      if (activeGame.length === 1) {
+        this.replaceGame(...activeGame);
+      } else {
+        const createdGame = await axios.post(
+          'https://crud-app-game.herokuapp.com/game',
+          {
+            name: this.name,
+            year: this.year,
+            rating: this.rating,
+          },
+          this.axiosConfig
+        );
+
+        this.games.push(createdGame.data);
+
+        this.name = '';
+        this.year = '';
+        this.rating = '';
       }
-
-      const createdGame = await axios.post(
-        'https://crud-app-game.herokuapp.com/game',
-        {
-          name: this.name,
-          year: this.year,
-          rating: this.rating,
-        },
-        this.axiosConfig
-      );
-
-      this.games.push(createdGame.data);
-
-      this.name = '';
-      this.year = '';
-      this.rating = '';
     },
 
     async deleteGame(game) {
@@ -125,14 +132,6 @@ export default {
       );
 
       this.games = this.games.filter((thisGame) => thisGame.id !== game.id);
-    },
-
-    stateActive() {
-      // change backgrond color of selected row
-      const tableRows = document.querySelectorAll('.tableRow');
-      tableRows.forEach((row) => {
-        row.style.backgroundColor = 'red';
-      });
     },
 
     async replaceGame(game) {
@@ -145,10 +144,36 @@ export default {
         },
         this.axiosConfig
       );
+      /* 
+      this.games = this.games.map((thisGame) => {
+        if (thisGame.id === game.id) {
+          return {
+            id: thisGame.id,
+            name: this.name,
+            year: this.year,
+            rating: this.rating,
+          };
+        } else {
+          return thisGame;
+        }
+      });
+      */
+
+      this.games.push(updatedGame);
 
       this.name = '';
       this.year = '';
       this.rating = '';
+    },
+
+    stateActive(id) {
+      this.games = this.games.map((game) => {
+        if (id === game.id) {
+          return { ...game, isActive: !game.isActive };
+        } else {
+          return { ...game, isActive: false };
+        }
+      });
     },
   },
   async mounted() {
@@ -156,7 +181,9 @@ export default {
       'https://crud-app-game.herokuapp.com/game',
       this.axiosConfig
     );
-    this.games = response.data;
+    this.games = response.data.map((res) => (
+      { ...res, isActive: false }
+    ));
   },
 };
 </script>
@@ -187,9 +214,9 @@ th {
 .replaceSvg {
 }
 
-input[type='radio'] {
+/* input[type='radio'] {
   display: none;
-}
+} */
 
 .btnCell {
   width: 10px;
@@ -221,5 +248,9 @@ input[type='radio'] {
   border: none;
   cursor: pointer;
   border-radius: 4px;
+}
+
+.active {
+  background: rebeccapurple;
 }
 </style>
