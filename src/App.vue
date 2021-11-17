@@ -287,10 +287,6 @@ th {
   padding: 8px;
 }
 
-/* input[type='radio'] {
-  display: none;
-} */
-
 .btnCell {
   width: 10px;
 }
@@ -347,6 +343,3 @@ th {
   border: 2px solid #ff453a;
 }
 </style>
-
-// TODO: button disabeln // TODO: Login // TODO: inputs dürfen die Werte nicht
-die Bedinungen überschreiten
