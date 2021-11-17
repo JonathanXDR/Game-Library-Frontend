@@ -1,12 +1,10 @@
 <template>
   <div>
     <table>
-      <tr>
+      <tr id="th">
         <th>Name</th>
         <th>Year</th>
-        <th>Rating</th>
-        <th></th>
-        <th></th>
+        <th colspan="3">Rating</th>
       </tr>
       <tr
         class="tableRow"
@@ -16,7 +14,7 @@
       >
         <td>{{ game.name }}</td>
         <td>{{ game.year }}</td>
-        <td>{{ game.rating }}</td>
+        <td class="tdRating">{{ game.rating }}</td>
 
         <td class="btnCell">
           <button
@@ -80,7 +78,7 @@
             v-bind:class="{ valid: !validation.year }"
           />
         </td>
-        <td>
+        <td colspan="3">
           <input
             class="formInput"
             type="text"
@@ -93,8 +91,6 @@
             v-bind:class="{ valid: !validation.rating }"
           />
         </td>
-        <td></td>
-        <td></td>
       </tr>
     </table>
 
@@ -268,6 +264,8 @@ export default {
 };
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -275,16 +273,26 @@ export default {
 }
 
 table {
-  font-family: arial, sans-serif;
+  font-family: 'Source Sans Pro';
   border-collapse: collapse;
   width: 100%;
 }
 
 td,
 th {
-  border: 1px solid #dddddd;
+  /* border: 1px solid #dddddd; */
   text-align: left;
-  padding: 8px;
+  padding: 18px 8px;
+}
+
+#th {
+  background-color: black;
+  color: white;
+  text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 
 .btnCell {
@@ -310,7 +318,7 @@ th {
 .deleteBtn {
   background-color: #ff453a;
   color: white;
-  padding: 4px 6px;
+  padding: 8px 10px;
   border: none;
   cursor: pointer;
   border-radius: 4px;
@@ -319,14 +327,14 @@ th {
 .replaceBtn {
   background-color: #5e5ce6;
   color: white;
-  padding: 4px 6px;
+  padding: 8px 10px;
   border: none;
   cursor: pointer;
   border-radius: 4px;
 }
 
 .active {
-  background: #64d3ff;
+  background: #64d3ff !important;
 }
 
 .formInput {
