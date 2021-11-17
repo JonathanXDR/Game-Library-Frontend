@@ -30,11 +30,10 @@ const router = new VueRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.name === 'Home' && localStorage.getItem('auth') === null) {
-//     console.log('test');
-//     next('/login');
-//   }
-// });
+router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem('auth');
+  if (token === null) next('/login');
+  else next();
+});
 
 export default router;

@@ -104,7 +104,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from '../../Services/HTTPService';
 export default {
   name: 'Home',
   data() {
@@ -122,10 +122,9 @@ export default {
 
       axiosConfig: {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.aGVyb2t1.5tWoGjrKqJvXwK9EkenSz5RGgbstqUZhp-xkZajGRSY`,
+          Authorization: `Bearer ${localStorage.getItem('auth')}`,
         },
       },
-      theCheckedRadioButton: false,
     };
   },
   methods: {
@@ -136,7 +135,7 @@ export default {
         this.replaceGame(...activeGame);
       } else {
         const createdGame = await axios.post(
-          'https://crud-app-game.herokuapp.com/game',
+          'game',
           {
             name: this.name,
             year: this.year,
@@ -153,7 +152,7 @@ export default {
 
     async deleteGame(game) {
       await axios.delete(
-        `https://crud-app-game.herokuapp.com/game/${game.id}`,
+        `game/${game.id}`,
         this.axiosConfig
       );
 
@@ -163,7 +162,7 @@ export default {
     async replaceGame(game) {
       const updatedGame = await axios
         .put(
-          `https://crud-app-game.herokuapp.com/game/${game.id}`,
+          `game/${game.id}`,
           {
             name: this.name,
             year: this.year,
@@ -225,7 +224,7 @@ export default {
 
   async mounted() {
     const response = await axios.get(
-      'https://crud-app-game.herokuapp.com/game',
+      'game',
       this.axiosConfig
     );
     this.games = response.data.map((res) => ({ ...res, isActive: false }));
