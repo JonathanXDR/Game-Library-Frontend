@@ -151,10 +151,7 @@ export default {
     },
 
     async deleteGame(game) {
-      await axios.delete(
-        `game/${game.id}`,
-        this.axiosConfig
-      );
+      await axios.delete(`game/${game.id}`, this.axiosConfig);
 
       this.games = this.games.filter((thisGame) => thisGame.id !== game.id);
     },
@@ -223,10 +220,7 @@ export default {
   },
 
   async mounted() {
-    const response = await axios.get(
-      'game',
-      this.axiosConfig
-    );
+    const response = await axios.get('game', this.axiosConfig);
     this.games = response.data.map((res) => ({ ...res, isActive: false }));
   },
   watch: {
