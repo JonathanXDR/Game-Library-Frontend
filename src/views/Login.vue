@@ -19,7 +19,12 @@
               class="wrap-input100 validate-input"
               data-validate="Username is required"
             >
-              <input class="input100" type="text" name="username" v-model="username"/>
+              <input
+                class="input100"
+                type="text"
+                name="username"
+                v-model="username"
+              />
               <span class="focus-input100"></span>
             </div>
 
@@ -31,7 +36,12 @@
               class="wrap-input100 validate-input"
               data-validate="Password is required"
             >
-              <input class="input100" type="password" name="pass" v-model="password"/>
+              <input
+                class="input100"
+                type="password"
+                name="pass"
+                v-model="password"
+              />
               <span class="focus-input100"></span>
             </div>
 
@@ -89,8 +99,7 @@ export default {
         this.axiosConfig
       );
 
-      // TODO: Set localstorage with bearer token
-      console.log(token);
+      localStorage.setItem('auth', token.data);
     },
 
     disableBtn() {
