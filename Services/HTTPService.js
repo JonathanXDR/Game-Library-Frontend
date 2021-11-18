@@ -8,13 +8,14 @@ const instance = axios.create({
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (window.location.pathname === '/login') return Promise.reject(error);
     if (error.response.status === 401 || error.response.status === 403) {
       // Redirect to login page
       window.location.href = window.location.href + 'login';
     } else {
       return Promise.reject(error);
     }
-  },
+  }
 );
 
 export default instance;
