@@ -24,13 +24,102 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
 
 /*//////////////////////////////////////////////////////////////////
-[ RESTYLE TAG ]*/
+[ General ]*/
 
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: 'Source Sans Pro';
 }
+
+/*//////////////////////////////////////////////////////////////////
+[ Home.vue ]*/
+
+/*//////////////////////////////////////////////////////////////////
+[ Account ]*/
+
+.accountBtn {
+  width: 125px;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 8px 10px;
+  background: black;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ Table ]*/
+
+table {
+  font-family: 'Source Sans Pro';
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  /* border: 1px solid #dddddd; */
+  text-align: left;
+  padding: 18px 8px;
+}
+
+#th {
+  background-color: black;
+  color: white;
+  text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.tdSubmit {
+  background: white;
+}
+
+.btnCell {
+  width: 10px;
+}
+
+.adjustBtn {
+  width: 60% !important;
+  height: 50px !important;
+}
+
+.deleteBtn {
+  background-color: #ff453a;
+  color: white;
+  padding: 8px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.replaceBtn {
+  background-color: #5e5ce6;
+  color: white;
+  padding: 8px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.active {
+  background: #64d3ff !important;
+}
+
+.adjustInput {
+  height: 40px !important;
+  font-size: 16px !important;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ SignUp.vue, Login.vue ]*/
 
 template {
   height: 100%;
@@ -38,7 +127,6 @@ template {
   /* font-family: Poppins-Regular, sans-serif; */
 }
 
-/*---------------------------------------------*/
 a {
   /* font-family: Poppins-Regular; */
   font-size: 14px;
@@ -54,11 +142,10 @@ a:focus {
 
 a:hover {
   text-decoration: none;
-  color: red;
-  border-color: red;
+  color: black;
+  border-color: black;
 }
 
-/*---------------------------------------------*/
 h1,
 h2,
 h3,
@@ -82,8 +169,8 @@ li {
   list-style-type: none;
 }
 
-/*---------------------------------------------*/
 input {
+  font-family: 'Source Sans Pro';
   outline: none;
   border: none;
 }
@@ -93,21 +180,19 @@ textarea {
   border: none;
 }
 
-textarea:focus,
+/* textarea:focus,
 input:focus {
   border-color: transparent !important;
-}
+} */
 
 label {
   display: block;
   margin: 0;
 }
 
-/*---------------------------------------------*/
 button {
   outline: none !important;
   border: none;
-  background: transparent;
 }
 
 button:hover {
@@ -118,8 +203,6 @@ iframe {
   border: none !important;
 }
 
-/*//////////////////////////////////////////////////////////////////
-[ Utility ]*/
 .txt1 {
   /* font-family: Montserrat-SemiBold; */
   font-size: 16px;
@@ -133,13 +216,6 @@ iframe {
   color: #999999;
   line-height: 1.5;
 }
-
-.bo1 {
-  border-bottom: 1px solid #999999;
-}
-
-/*//////////////////////////////////////////////////////////////////
-[ login ]*/
 
 .limiter {
   width: 100%;
@@ -164,9 +240,6 @@ iframe {
   position: relative;
 }
 
-/*==================================================================
-[ Form ]*/
-
 .login100-form {
   width: 100%;
 }
@@ -182,18 +255,6 @@ iframe {
   text-transform: uppercase;
 }
 
-/*------------------------------------------------------------------
-[ Input ]*/
-
-.wrap-input100 {
-  width: 100%;
-  position: relative;
-  background-color: #f7f7f7;
-  border: 1px solid #e6e6e6;
-  border-radius: 10px;
-}
-
-/*---------------------------------------------*/
 .input100 {
   /* font-family: Poppins-Regular; */
   color: black;
@@ -204,40 +265,16 @@ iframe {
   background: transparent;
   height: 60px;
   padding: 0 20px;
-}
-/*------------------------------------------------------------------
-[ Focus Input ]*/
-
-.focus-input100 {
-  position: absolute;
-  display: block;
-  width: calc(100% + 2px);
-  height: calc(100% + 2px);
-  top: -1px;
-  left: -1px;
-  pointer-events: none;
-  border: 1px solid red;
+  position: relative;
+  background-color: #f7f7f7;
+  border: 1px solid #e6e6e6;
   border-radius: 10px;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.4s;
-  transform: scaleX(1.1) scaleY(1.3);
 }
 
-.input100:focus + .focus-input100 {
-  visibility: visible;
-  opacity: 1;
-  transform: scale(1);
+.notValid {
+  border: 1.5px solid #ff453a;
 }
 
-.eff-focus-selection {
-  visibility: visible;
-  opacity: 1;
-  transform: scale(1);
-}
-
-/*------------------------------------------------------------------
-[ Button ]*/
 .container-login100-form-btn {
   width: 100%;
   display: flex;
@@ -262,60 +299,11 @@ iframe {
   z-index: 1;
 }
 
-/*------------------------------------------------------------------
-[ Alert validate ]*/
-
-.validate-input {
-  position: relative;
+.login100-form-btn:disabled {
+  filter: grayscale(100%);
+  opacity: 0.5;
+  cursor: default;
 }
-
-.alert-validate::before {
-  content: attr(data-validate);
-  position: absolute;
-  max-width: 70%;
-  background-color: white;
-  border: 1px solid #c80000;
-  border-radius: 2px;
-  padding: 4px 25px 5px 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 12px;
-  pointer-events: none;
-  /* font-family: Poppins-Regular; */
-  color: #c80000;
-  font-size: 14px;
-  line-height: 1.4;
-  text-align: left;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-
-.alert-validate::after {
-  content: '\f12a';
-  /* font-family: FontAwesome; */
-  display: block;
-  position: absolute;
-  color: #c80000;
-  font-size: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 18px;
-}
-
-.alert-validate:hover:before {
-  visibility: visible;
-  opacity: 1;
-}
-
-@media (max-width: 992px) {
-  .alert-validate::before {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-/*------------------------------------------------------------------
-[ Utils ]*/
 
 .p-r-110 {
   padding-right: 110px;

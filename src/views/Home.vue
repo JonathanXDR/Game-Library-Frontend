@@ -1,5 +1,26 @@
 <template>
   <div>
+    <div class="dropdown">
+      <button class="accountBtn">
+        Username <i class="fa fa-angle-down"></i>
+        <!-- <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="white"
+      >
+        <path
+          d="M20.822 18.096c-3.439-.794-6.64-1.49-5.09-4.418 4.72-8.912 1.251-13.678-3.732-13.678-5.082 0-8.464 4.949-3.732 13.678 1.597 2.945-1.725 3.641-5.09 4.418-3.073.71-3.188 2.236-3.178 4.904l.004 1h23.99l.004-.969c.012-2.688-.092-4.222-3.176-4.935z"
+        />
+      </svg> -->
+      </button>
+      <ul class="dropdown-content">
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+      </ul>
+    </div>
     <table>
       <tr id="th">
         <th>Name</th>
@@ -57,17 +78,17 @@
       <tr>
         <td>
           <input
-            class="formInput"
+            class="input100 adjustInput"
             type="text"
             placeholder="Tetris..."
             maxlength="40"
             v-model.trim="name"
-            v-bind:class="{ valid: !validation.name }"
+            v-bind:class="{ notValid: !validation.name }"
           />
         </td>
         <td>
           <input
-            class="formInput"
+            class="input100 adjustInput"
             type="text"
             pattern="\d*"
             min="1900"
@@ -75,12 +96,12 @@
             maxlength="4"
             placeholder="1984..."
             v-model="year"
-            v-bind:class="{ valid: !validation.year }"
+            v-bind:class="{ notValid: !validation.year }"
           />
         </td>
         <td colspan="3">
           <input
-            class="formInput"
+            class="input100 adjustInput"
             type="text"
             pattern="\d*"
             min="1"
@@ -88,19 +109,22 @@
             maxlength="3"
             placeholder="9.5..."
             v-model="rating"
-            v-bind:class="{ valid: !validation.rating }"
+            v-bind:class="{ notValid: !validation.rating }"
           />
         </td>
       </tr>
+      <tr>
+        <td class="tdSubmit">
+          <button
+            class="login100-form-btn adjustBtn"
+            v-bind:disabled="disableBtn()"
+            @click="submitGame"
+          >
+            Submit
+          </button>
+        </td>
+      </tr>
     </table>
-
-    <button
-      class="submitBtn"
-      v-bind:disabled="disableBtn()"
-      @click="submitGame"
-    >
-      Submit
-    </button>
   </div>
 </template>
 <script>
@@ -257,90 +281,5 @@ export default {
 };
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-table {
-  font-family: 'Source Sans Pro';
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  /* border: 1px solid #dddddd; */
-  text-align: left;
-  padding: 18px 8px;
-}
-
-#th {
-  background-color: black;
-  color: white;
-  text-transform: uppercase;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
-.btnCell {
-  width: 10px;
-}
-
-.submitBtn {
-  background-color: #4caf50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  margin-top: 10px;
-}
-
-.submitBtn:disabled {
-  filter: grayscale(100%);
-  opacity: 0.5;
-  cursor: default;
-}
-
-.deleteBtn {
-  background-color: #ff453a;
-  color: white;
-  padding: 8px 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.replaceBtn {
-  background-color: #5e5ce6;
-  color: white;
-  padding: 8px 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.active {
-  background: #64d3ff !important;
-}
-
-.formInput {
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  outline: none;
-  border: 2px solid #c4c4c4;
-  padding: 0 30px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.valid {
-  border: 2px solid #ff453a;
-}
+@import '../assets/main.css';
 </style>
