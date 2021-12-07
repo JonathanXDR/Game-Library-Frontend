@@ -10,7 +10,7 @@
             class="login100-form validate-form flex-sb flex-w"
             @submit.prevent="signUpUser"
           >
-            <span class="login100-form-title p-b-53"> Create Account </span>
+            <h1 class="login100-form-title p-b-53">Create Account</h1>
 
             <div class="p-t-31 p-b-9">
               <label class="txt1"> Username </label>
@@ -20,6 +20,7 @@
               class="input100"
               type="text"
               name="username"
+              placeholder="Username..."
               maxlength="20"
               v-model.trim="username"
               v-bind:class="{ notValid: !validation.username }"
@@ -33,6 +34,7 @@
               class="input100"
               type="password"
               name="pass"
+              placeholder="Password..."
               maxlength="40"
               v-model.trim="password"
               v-bind:class="{ notValid: !validation.password }"
@@ -45,6 +47,7 @@
               class="input100"
               type="password"
               name="pass"
+              placeholder="Repeat Password..."
               maxlength="40"
               v-model.trim="repeatPassword"
               v-bind:class="{ notValid: !validation.repeatPassword }"

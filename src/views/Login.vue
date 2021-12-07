@@ -10,15 +10,16 @@
             class="login100-form validate-form flex-sb flex-w"
             @submit.prevent="loginUser"
           >
-            <span class="login100-form-title p-b-53"> Login </span>
+            <h1 class="login100-form-title p-b-53">Login</h1>
 
             <div class="p-t-31 p-b-9">
-              <label class="txt1"> Username </label>
+              <label class="txt1">Username</label>
             </div>
             <input
               class="input100"
               type="text"
               name="username"
+              placeholder="Username..."
               maxlength="20"
               v-model.trim="username"
               v-bind:class="{ notValid: !validation.username }"
@@ -32,6 +33,7 @@
               class="input100"
               type="password"
               name="pass"
+              placeholder="Password..."
               maxlength="40"
               v-model="password"
               v-bind:class="{ notValid: !validation.password }"

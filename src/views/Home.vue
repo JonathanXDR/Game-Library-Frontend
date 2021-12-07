@@ -1,24 +1,29 @@
 <template>
   <div>
     <div class="dropdown">
-      <button class="accountBtn">
-        Username <i class="fa fa-angle-down"></i>
+      <label for="check01" class="accountBtn"
+        >Username
+        <i class="fa fa-angle-down"></i>
         <!-- <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="white"
-      >
-        <path
-          d="M20.822 18.096c-3.439-.794-6.64-1.49-5.09-4.418 4.72-8.912 1.251-13.678-3.732-13.678-5.082 0-8.464 4.949-3.732 13.678 1.597 2.945-1.725 3.641-5.09 4.418-3.073.71-3.188 2.236-3.178 4.904l.004 1h23.99l.004-.969c.012-2.688-.092-4.222-3.176-4.935z"
-        />
-      </svg> -->
-      </button>
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="white"
+        >
+          <path
+            d="M20.822 18.096c-3.439-.794-6.64-1.49-5.09-4.418 4.72-8.912 1.251-13.678-3.732-13.678-5.082 0-8.464 4.949-3.732 13.678 1.597 2.945-1.725 3.641-5.09 4.418-3.073.71-3.188 2.236-3.178 4.904l.004 1h23.99l.004-.969c.012-2.688-.092-4.222-3.176-4.935z"
+          />
+        </svg> -->
+      </label>
+      <input id="check01" type="checkbox" />
+
       <ul class="dropdown-content">
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
+        <li><a href="/settings">Settings</a></li>
+        <li><a href="/login">Logout</a></li>
+        <!-- <li><a href="#">Change Username</a></li>
+        <li><a href="#">Change Password</a></li>
+        <li><a href="#" class="red">Delete Account</a></li> -->
       </ul>
     </div>
     <table>
@@ -78,7 +83,7 @@
       <tr>
         <td>
           <input
-            class="input100 adjustInput"
+            class="input100 inputHome"
             type="text"
             placeholder="Tetris..."
             maxlength="40"
@@ -88,7 +93,7 @@
         </td>
         <td>
           <input
-            class="input100 adjustInput"
+            class="input100 inputHome"
             type="text"
             pattern="\d*"
             min="1900"
@@ -101,7 +106,7 @@
         </td>
         <td colspan="3">
           <input
-            class="input100 adjustInput"
+            class="input100 inputHome"
             type="text"
             pattern="\d*"
             min="1"
@@ -116,7 +121,7 @@
       <tr>
         <td class="tdSubmit">
           <button
-            class="login100-form-btn adjustBtn"
+            class="login100-form-btn btnHome"
             v-bind:disabled="disableBtn()"
             @click="submitGame"
           >
