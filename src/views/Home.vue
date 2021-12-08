@@ -20,7 +20,7 @@
 
       <ul class="dropdown-content">
         <li><a href="/settings">Settings</a></li>
-        <li><a href="/login">Logout</a></li>
+        <li><a @click="logout">Logout</a></li>
         <!-- <li><a href="#">Change Username</a></li>
         <li><a href="#">Change Password</a></li>
         <li><a href="#" class="red">Delete Account</a></li> -->
@@ -205,6 +205,11 @@ export default {
       );
 
       this.resetInputs();
+    },
+
+    logout() {
+      localStorage.removeItem('auth');
+      this.$router.push('/login');
     },
 
     resetInputs() {

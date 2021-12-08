@@ -13,7 +13,10 @@
               </div>
             </div>
             <div class="profile-settings-holder">
-              <form class="form-horizontal profile-update">
+              <form
+                class="form-horizontal profile-update"
+                @submit.prevent="replaceUser"
+              >
                 <!-- <div class="form-group clearfix">
                   <div class="col-sm-12 control-label">
                     <label for="profile_email">Your email</label>
@@ -86,13 +89,19 @@
 
                 <div class="profile-people-holder lineSettings"></div>
 
-                <button class="login100-form-btn btnSettings">
+                <button
+                  class="login100-form-btn btnSettings"
+                  @click="deleteUser(user)"
+                >
                   Delete Account
                 </button>
 
                 <div class="profile-people-holder lineSettings"></div>
 
-                <button class="login100-form-btn btnSettings2">
+                <button
+                  class="login100-form-btn btnSettings2"
+                  v-bind:disabled="disableBtn()"
+                >
                   Save changes
                 </button>
               </form>
@@ -128,31 +137,53 @@ export default {
   },
 
   methods: {
-    async signUpUser() {
+    async replaceUser(user) {
       if (this.password !== this.repeatPassword) {
         this.validation.repeatPassword = false;
         return;
       }
       this.disableBtn();
+      console.log('replaceUser');
 
-      const createdUser = await axios.post(
-        'user',
-        {
-          username: this.username,
-          password: this.password,
-          repeatPassword: this.repeatPassword,
-        },
-        this.axiosConfig
+      const updatedUser = await axios
+        .put(
+          `user/${user.id}`,
+          {
+            username: this.username,
+            password: this.password,
+            repeatPassword: this.repeatPassword,
+          },
+          this.axiosConfig
+        )
+        .then((res) => res.data);
+
+      this.$set(
+        this.users,
+        this.users.findIndex((user) => user.id === updatedUser.id),
+        updatedUser
       );
-      console.log(createdUser);
-      this.$router.push('/login');
+      console.log(updatedUser);
+      this.resetInputs();
+    },
+
+    async deleteUser(user) {
+      console.log('deleteUser');
+      await axios.delete(`user/${user.id}`, this.axiosConfig);
+
+      this.users = this.users.filter((thisUser) => thisUser.id !== user.id);
+    },
+
+    resetInputs() {
+      this.username = '';
+      this.password = '';
+      this.repeatPassword = '';
     },
 
     disableBtn() {
       if (
-        this.validation.username === true &&
-        this.validation.password === true &&
-        this.validation.repeatPassword === true
+        this.validation.username === true ||
+        (this.validation.password === true &&
+          this.validation.repeatPassword === true)
       ) {
         return false;
       } else {
