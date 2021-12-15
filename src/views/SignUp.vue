@@ -131,6 +131,16 @@ export default {
         return true;
       }
     },
+
+    checkPasswords() {
+      if (this.password !== this.repeatPassword) {
+        this.validation.password = false;
+        this.validation.repeatPassword = false;
+      } else {
+        this.validation.password = true;
+        this.validation.repeatPassword = true;
+      }
+    },
   },
 
   mounted() {},
@@ -142,6 +152,7 @@ export default {
       } else {
         this.validation.username = true;
       }
+
       this.disableBtn();
     },
 
@@ -149,18 +160,20 @@ export default {
       if (this.password === '') {
         this.validation.password = false;
       } else {
-        this.validation.password = true;
+        this.checkPasswords();
       }
+
       this.disableBtn();
     },
 
     repeatPassword() {
       // if password is empty or not equal to repeatPassword then set validation to false
-      if (this.repeatPassword === '' || this.repeatPassword !== this.password) {
+      if (this.repeatPassword === '') {
         this.validation.repeatPassword = false;
       } else {
-        this.validation.repeatPassword = true;
+        this.checkPasswords();
       }
+
       this.disableBtn();
     },
   },

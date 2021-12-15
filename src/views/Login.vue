@@ -86,17 +86,22 @@ export default {
   methods: {
     async loginUser() {
       this.disableBtn();
-      const token = await axios.post(
-        'user/login',
-        {
-          username: this.username,
-          password: this.password,
-        },
-        this.axiosConfig
-      );
-      localStorage.setItem('auth', token.data);
-      // console.log(token.data);
-      this.$router.push('/');
+
+      try {
+        const token = await axios.post(
+          'user/login',
+          {
+            username: this.username,
+            password: this.password,
+          },
+          this.axiosConfig
+        );
+
+        localStorage.setItem('auth', token.data);
+        this.$router.push('/');
+      } catch (error) {
+        window.alert('Wrong username or password!');
+      }
     },
 
     disableBtn() {

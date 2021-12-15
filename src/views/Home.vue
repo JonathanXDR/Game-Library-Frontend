@@ -2,7 +2,7 @@
   <div>
     <div class="dropdown">
       <label for="check01" class="accountBtn"
-        >Username
+        >{{ userName }}
         <i class="fa fa-angle-down"></i>
         <!-- <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -134,6 +134,7 @@
 </template>
 <script>
 import axios from '../../Services/HTTPService';
+import jwt from 'jsonwebtoken';
 export default {
   name: 'Home',
   data() {
@@ -148,6 +149,8 @@ export default {
         year: false,
         rating: false,
       },
+
+      userName: null,
 
       axiosConfig: {
         headers: {
@@ -254,8 +257,21 @@ export default {
   },
 
   async mounted() {
-    const response = await axios.get('game', this.axiosConfig);
-    this.games = response.data.map((res) => ({ ...res, isActive: false }));
+    try {
+      const response = await axios.get('game', this.axiosConfig);
+      this.games = response.data.map((res) => ({ ...res, isActive: false }));
+
+      const decoded = jwt.verify(
+        localStorage.getItem('auth'),
+        process.env.VUE_APP_ACCESS_TOKEN_SECRET
+      );
+
+      this.userName = decoded.username;
+    } catch (error) {
+      window.alert('Authentication failed. User not found.');
+      localStorage.removeItem('auth');
+      this.$router.push('/login');
+    }
   },
   watch: {
     name() {

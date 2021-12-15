@@ -91,7 +91,7 @@
 
                 <button
                   class="login100-form-btn btnSettings"
-                  @click="deleteUser(user)"
+                  @click="deleteUser()"
                 >
                   Delete Account
                 </button>
@@ -114,6 +114,7 @@
 </template>
 <script>
 import axios from '../../Services/HTTPService';
+import jwt from 'jsonwebtoken';
 export default {
   name: 'Settings',
   data() {
@@ -128,6 +129,8 @@ export default {
         repeatPassword: false,
       },
 
+      userId: null,
+
       axiosConfig: {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('auth')}`,
@@ -137,7 +140,7 @@ export default {
   },
 
   methods: {
-    async replaceUser(user) {
+    async replaceUser() {
       if (this.password !== this.repeatPassword) {
         this.validation.repeatPassword = false;
         return;
@@ -145,32 +148,28 @@ export default {
       this.disableBtn();
       console.log('replaceUser');
 
-      const updatedUser = await axios
-        .put(
-          `user/${user.id}`,
-          {
-            username: this.username,
-            password: this.password,
-            repeatPassword: this.repeatPassword,
-          },
-          this.axiosConfig
-        )
-        .then((res) => res.data);
-
-      this.$set(
-        this.users,
-        this.users.findIndex((user) => user.id === updatedUser.id),
-        updatedUser
+      const token = await axios.put(
+        `user/${this.userId}`,
+        {
+          username: this.username,
+          password: this.password,
+          repeatPassword: this.repeatPassword,
+        },
+        this.axiosConfig
       );
-      console.log(updatedUser);
+
+      localStorage.removeItem('auth');
+      console.log(token.data);
+
+      // localStorage.setItem('auth', token.data);
+      this.$router.push('/');
       this.resetInputs();
     },
 
-    async deleteUser(user) {
+    async deleteUser() {
       console.log('deleteUser');
-      await axios.delete(`user/${user.id}`, this.axiosConfig);
-
-      this.users = this.users.filter((thisUser) => thisUser.id !== user.id);
+      await axios.delete(`user/${this.userId}`, this.axiosConfig);
+      this.$router.push('/signUp');
     },
 
     resetInputs() {
@@ -192,7 +191,13 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    const decoded = jwt.verify(
+      localStorage.getItem('auth'),
+      process.env.VUE_APP_ACCESS_TOKEN_SECRET
+    );
+    this.userId = decoded.id;
+  },
 
   watch: {
     username() {
