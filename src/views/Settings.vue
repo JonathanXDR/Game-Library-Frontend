@@ -146,7 +146,6 @@ export default {
         return;
       }
       this.disableBtn();
-      console.log('replaceUser');
 
       const token = await axios.put(
         `user/${this.userId}`,
@@ -158,17 +157,14 @@ export default {
         this.axiosConfig
       );
 
-      localStorage.removeItem('auth');
-      console.log(token.data);
-
-      // localStorage.setItem('auth', token.data);
+      localStorage.setItem('auth', token.data);
       this.$router.push('/');
       this.resetInputs();
     },
 
     async deleteUser() {
-      console.log('deleteUser');
       await axios.delete(`user/${this.userId}`, this.axiosConfig);
+      localStorage.removeItem('auth');
       this.$router.push('/signUp');
     },
 

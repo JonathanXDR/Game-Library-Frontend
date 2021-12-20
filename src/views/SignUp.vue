@@ -107,7 +107,7 @@ export default {
       }
       this.disableBtn();
 
-      const createdUser = await axios.post(
+      await axios.post(
         'user',
         {
           username: this.username,
@@ -116,7 +116,6 @@ export default {
         },
         this.axiosConfig
       );
-      console.log(createdUser);
       this.$router.push('/login');
     },
 
