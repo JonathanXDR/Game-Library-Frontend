@@ -1,4 +1,4 @@
-# crud-app-frontend
+# CRUD-Frontend
 
 ## Project setup
 ```
