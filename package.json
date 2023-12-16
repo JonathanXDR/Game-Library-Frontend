@@ -12,7 +12,7 @@
     "core-js": "^3.33.3",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.0.2",
-    "vue": "^3.3.8",
+    "vue": "^3.3.9",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
